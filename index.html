@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transnovo 健耕医疗 · CMEF 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #1A2744;
+      --navy-2:  #F4F6FB;
+      --navy-3:  #E8EDF8;
+      --crimson: #E8174D;
+      --crimson-dim: rgba(232, 23, 77, 0.08);
+      --glass:   rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(26, 39, 68, 0.1);
+      --text:    #1A2744;
+      --muted:   rgba(26, 39, 68, 0.5);
+      --radius:  16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy-2);
+      color: var(--text);
+      font-family: 'Noto Sans SC', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── animated bg mesh ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 20% 10%, rgba(232,23,77,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 60% at 80% 80%, rgba(43,58,107,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* noise grain */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 0 16px 60px;
+    }
+
+    /* ─── HEADER ─── */
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 0 28px;
+      gap: 16px;
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeUp 0.7s ease forwards 0.1s;
+    }
+
+    .header-logo {
+      height: 56px;
+      width: auto;
+      max-width: 320px;
+      filter: drop-shadow(0 2px 8px rgba(26,39,68,0.12));
+    }
+
+    .cmef-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--crimson-dim);
+      border: 1px solid rgba(232,23,77,0.2);
+      color: var(--crimson);
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      padding: 6px 14px;
+      border-radius: 100px;
+    }
+
+    .cmef-badge::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--crimson);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    /* ─── SECTION WRAPPER ─── */
+    .section {
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    .section.s1 { animation: fadeUp 0.65s ease forwards 0.25s; }
+    .section.s2 { animation: fadeUp 0.65s ease forwards 0.4s; }
+    .section.s3 { animation: fadeUp 0.65s ease forwards 0.55s; }
+    .section.s4 { animation: fadeUp 0.65s ease forwards 0.7s; }
+    .section.s5 { animation: fadeUp 0.65s ease forwards 0.85s; }
+
+    .section-label {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      margin-bottom: 10px;
+      padding-left: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(232,23,77,0.4), transparent);
+    }
+
+    /* ─── GLASS CARD ─── */
+    .glass-card {
+      background: #ffffff;
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 16px rgba(26,39,68,0.07);
+      overflow: hidden;
+    }
+
+    /* ─── VIDEO ─── */
+    .video-card {
+      position: relative;
+    }
+    .video-card video {
+      width: 100%;
+      display: block;
+      border-radius: var(--radius);
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      background: #000;
+    }
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, rgba(255,255,255,0.3) 100%);
+      border-radius: var(--radius);
+      pointer-events: none;
+    }
+
+    /* ─── WEBSITE BUTTON ─── */
+    .website-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      text-decoration: none;
+      color: var(--text);
+      transition: background 0.2s, transform 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .website-btn:active { transform: scale(0.98); }
+    .website-btn:hover { background: rgba(26,39,68,0.03); }
+
+    .website-btn-left { display: flex; flex-direction: column; gap: 4px; }
+    .website-btn-label {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 300;
+    }
+    .website-btn-url {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+    .website-btn-url span { color: var(--crimson); }
+
+    .arrow-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--crimson);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+    .website-btn:hover .arrow-icon { transform: translate(3px, -3px); }
+
+    /* ─── CONTACTS ─── */
+    .contacts-list { display: flex; flex-direction: column; gap: 1px; }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(26,39,68,0.07);
+      transition: background 0.2s;
+    }
+    .contact-item:last-child { border-bottom: none; }
+    .contact-item:hover { background: rgba(26,39,68,0.02); }
+
+    .contact-left { display: flex; flex-direction: column; gap: 3px; }
+    .contact-role {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 300;
+    }
+    .contact-name {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .contact-phone {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(26,39,68,0.6);
+      letter-spacing: 0.05em;
+    }
+
+    .call-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(232,23,77,0.12);
+      border: 1px solid rgba(232,23,77,0.25);
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .call-btn:active { transform: scale(0.9); background: var(--crimson); }
+
+    /* ─── WECHAT QR ─── */
+    .qr-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 28px 20px;
+      gap: 14px;
+    }
+    .qr-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--muted);
+      text-align: center;
+    }
+    .qr-image {
+      width: 180px;
+      height: 180px;
+      border-radius: 12px;
+      border: 1px solid var(--glass-border);
+      object-fit: contain;
+      background: #fff;
+      padding: 8px;
+    }
+    .qr-hint {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 20px 18px;
+    }
+    .divider-text {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(26,39,68,0.1);
+    }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      text-align: center;
+      padding-top: 20px;
+      opacity: 0;
+      animation: fadeUp 0.65s ease forwards 1s;
+    }
+    .footer-line {
+      width: 40px;
+      height: 2px;
+      background: var(--crimson);
+      margin: 0 auto 14px;
+      border-radius: 2px;
+    }
+    .footer-text {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.8); }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- HEADER -->
+  <header class="header">
+    <img class="header-logo" src="logo.png" alt="Transnovo 健耕医疗" />
+    <div class="cmef-badge">CMEF 2025 · 上海</div>
+  </header>
+
+  <!-- VIDEO -->
+  <div class="section s1">
+    <div class="section-label">市场部最新视频</div>
+    <div class="glass-card video-card">
+      <video
+        controls
+        playsinline
+        preload="metadata"
+        poster=""
+      >
+        <source src="https://life-port.oss-cn-hangzhou.aliyuncs.com/QRVideo/%E5%B8%82%E5%9C%BA%E9%83%A8%E8%A7%86%E9%A2%91.mp4" type="video/mp4" />
+        您的浏览器不支持视频播放
+      </video>
+      <div class="video-overlay"></div>
+    </div>
+  </div>
+
+  <!-- WEBSITE -->
+  <div class="section s2">
+    <div class="section-label">企业官网</div>
+    <div class="glass-card">
+      <a class="website-btn" href="https://test.transnovo.com" target="_blank" rel="noopener">
+        <div class="website-btn-left">
+          <span class="website-btn-label">点击访问官方网站</span>
+          <span class="website-btn-url"><span>test.</span>transnovo.com</span>
+        </div>
+        <div class="arrow-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- CONTACTS: 中台公共账号 -->
+  <div class="section s3">
+    <div class="section-label">联系我们</div>
+    <div class="glass-card contacts-list">
+
+      <!-- 中台公共账号 -->
+      <div class="contact-item">
+        <div class="contact-left">
+          <span class="contact-role">中台公共账号</span>
+          <span class="contact-name">健耕医疗</span>
+          <span class="contact-phone">175 1044 3042</span>
+        </div>
+        <a class="call-btn" href="tel:17510443042" aria-label="拨打电话">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="#E8174D"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- 杨德莲 -->
+      <div class="contact-item">
+        <div class="contact-left">
+          <span class="contact-role">招商总监</span>
+          <span class="contact-name">杨德莲</span>
+          <span class="contact-phone">135 0300 9310</span>
+        </div>
+        <a class="call-btn" href="tel:13503009310" aria-label="拨打电话">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="#E8174D"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- 徐宏伟 -->
+      <div class="contact-item">
+        <div class="contact-left">
+          <span class="contact-role">招商团队</span>
+          <span class="contact-name">徐宏伟</span>
+          <span class="contact-phone">133 0652 0001</span>
+        </div>
+        <a class="call-btn" href="tel:13306520001" aria-label="拨打电话">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="#E8174D"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- 彭耐 -->
+      <div class="contact-item">
+        <div class="contact-left">
+          <span class="contact-role">招商团队</span>
+          <span class="contact-name">彭耐</span>
+          <span class="contact-phone">134 6752 6364</span>
+        </div>
+        <a class="call-btn" href="tel:13467526364" aria-label="拨打电话">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="#E8174D"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WECHAT QR -->
+  <div class="section s4">
+    <div class="glass-card">
+      <div class="divider-row" style="padding-top:20px;">
+        <div class="divider-line"></div>
+        <span class="divider-text">扫码添加企业微信</span>
+        <div class="divider-line"></div>
+      </div>
+      <div class="qr-section" style="padding-top:0;">
+        <img
+          class="qr-image"
+          src="qrcode.png"
+          alt="Transnovo 企业微信二维码"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        />
+        <!-- fallback if image not found -->
+        <div style="display:none;width:180px;height:180px;border-radius:12px;border:2px dashed rgba(255,255,255,0.15);align-items:center;justify-content:center;flex-direction:column;gap:8px;color:var(--muted);font-size:12px;text-align:center;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="13" y="3" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="3" y="13" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="14" width="2" height="2" fill="currentColor"/><rect x="18" y="14" width="2" height="2" fill="currentColor"/><rect x="14" y="18" width="2" height="2" fill="currentColor"/><rect x="18" y="18" width="2" height="2" fill="currentColor"/></svg>
+          企业微信二维码<br/>即将上传
+        </div>
+        <p class="qr-hint">微信扫描二维码<br/>添加健耕医疗企业微信</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-line"></div>
+    <p class="footer-text">© 2025 Transnovo 健耕医疗 · 为生命重塑未来</p>
+  </footer>
+
+</div>
+</body>
+</html>
